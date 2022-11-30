@@ -1,37 +1,49 @@
 game();
 
 function game() {
+    console.log('---Initializing!!!---')
     options = ['rock', 'paper', 'scissors'];
     const maxRound = 5;
     let playerWins = 0;
     let computerWins = 0;
     let roundNumber = 1; 
+    let computerSelection;
+    let playerSelection;
 
      /* loops through this while roundNumber is 5 or less... */
     while (roundNumber <= maxRound) {
-        let computerSelection = getComputerChoice();
-        let playerSelection = getPlayerInput();
+        computerSelection = getComputerChoice();
+        playerSelection = getPlayerInput();
         let roundResult = playRound(playerSelection, computerSelection);
-        switch(roundResult) {
-            case 'win':
+        console.log(`roundResult is "${roundResult}"`); // debugging
+        switch (roundResult) {
+            case 'win': 
                 console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+                alert(`You win! ${playerSelection} beats ${computerSelection}`);
                 playerWins = (playerWins + 1);
-                roundNumber = (roundNumber + 1)
+                roundNumber = (roundNumber + 1);
+                break;
             case 'lose':
                 console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
+                alert(`You lose! ${computerSelection} beats ${playerSelection}`);
                 computerWins = (computerWins + 1);
                 roundNumber = (roundNumber + 1);
+                break;
             case 'draw':
-                alert('It\'s a draw! Go again!');
-                console.log('It\'s a draw! Go again!'); /* doesn't increment round number or wins */
+                console.log('It\'s a draw! Do-over!'); /* doesn't increment round number or wins */
+                alert('It\'s a draw! Do-over!');
+                break;
             } 
         }   
 
          /* then goes here, for the ending. */
         if (playerWins > computerWins) { 
-            console.log('Congratulations! You win!');
+            console.log(`Congratulations! You won ${playerWins} out of ${maxRound} rounds, so you win!`);
+            alert(`Congratulations! You won ${playerWins} out of ${maxRound} rounds, so you win!`);
         } else {
-            console.log('Sorry, you lost!')
+            console.log(`Sorry! You only won ${playerWins} out of ${maxRound} rounds, so you lose!`);
+            alert(`Sorry! You only won ${playerWins} out of ${maxRound} rounds, so you lose!`);
+
         }
 
 
@@ -44,7 +56,7 @@ is called from, but by where the function is ORIGINALLY DECLARED. */
     function playRound(playerSelection, computerSelection) {
         let result; 
         switch(computerSelection) {  // switch based on computerSelection
-            case 'rock': {
+            case 'rock':  
                 switch(playerSelection) {
                     case 'rock':
                         result = 'draw';
@@ -56,21 +68,21 @@ is called from, but by where the function is ORIGINALLY DECLARED. */
                         result = 'lose';
                         break;
                 }
-            }
-            case 'paper': {
+                break;
+            case 'paper': 
                 switch(playerSelection) {
                     case 'rock':
-                        result = 'win';
+                        result = 'lose';
                         break;
                     case 'paper':
                         result = 'draw';
                         break;
                     case 'scissors':
-                        result = 'lose';
+                        result = 'win';
                         break;
                 }
-            }
-            case 'scissors': {
+                break;
+            case 'scissors': 
                 switch(playerSelection) {
                     case 'rock':
                         result = 'win';
@@ -82,10 +94,13 @@ is called from, but by where the function is ORIGINALLY DECLARED. */
                         result = 'draw';
                         break;
                 }
+                break;
             }
-        }
+        console.log `playRound() result is ${result}`;
         return result;
-    }
+        }
+      
+    
 
     
     
@@ -100,78 +115,24 @@ is called from, but by where the function is ORIGINALLY DECLARED. */
     }
 
     function getPlayerInput() { //get the player's selection
+        console.log('getPlayerInput()');
         let loopInput = true;
+        let playerSelection;
         while (loopInput == true) {
-            let playerInput = prompt(`Let\'s play a game of rock paper scissors, muff. Best of ${maxRound}. Round ${roundNumber}! Put your choice right down there.`)
+            let playerInput = prompt(`Let's play a game of rock paper scissors, Best of ${maxRound} wins. Round ${roundNumber}! Enter your choice below.`)
             console.log(playerInput); // for debugging purposes
-            let playerSelection = playerInput.toLowerCase(); // convert the input to lowercase, for case-insensitivity
+            playerSelection = playerInput.toLowerCase(); // convert the input to lowercase, for case-insensitivity
             console.log(`playerSelection is: ${playerSelection}`);  // for debugging purposes
             loopInput = false;
             if (options.includes(playerSelection) == false) {
                 loopInput = true;
                 console.log('Invalid player input, dumbo.'); // for debugging purposes
-                // alert('That\'s not a choice, stupid. Don\'t you know how to play this game? Pick again!');
-                // playerInput = prompt(`Let\'s play a game of rock paper scissors, muff. Best of ${maxRound}. Round ${roundNumber}! Put your choice right down there.`)
+                alert('Invalid input. \n"Rock", "paper", or "scissors" please!');
+                                // playerInput = prompt(`Let\'s play a game of rock paper scissors, muff. Best of ${maxRound}. Round ${roundNumber}! Put your choice right down there.`)
             }
-        }    
+        }
+        console.log(playerSelection);
         return playerSelection;
-        }
+    }
     
-        function checkSelection (selection) { // check if playerSelection is present in the options array
-            if (options.includes(selection)) { // this may be too granular a function...
-                return true;
-            } else {
-                return false;
-            }
-        }
-    
-
-
-
-    // function compareSelection(playerSelection, computerSelection) { // compare the two selections and see who wins!
-    //     let result; 
-    //     switch(computerSelection) {  // switch based on computerSelection
-    //         case 'rock': {
-    //             switch(playerSelection) {
-    //                 case 'rock':
-    //                     result = 'draw';
-    //                     break;
-    //                 case 'paper':
-    //                     result = 'win';
-    //                     break;
-    //                 case 'scissors':
-    //                     result = 'lose';
-    //                     break;
-    //             }
-    //         }
-    //         case 'paper': {
-    //             switch(playerSelection) {
-    //                 case 'rock':
-    //                     result = 'win';
-    //                     break;
-    //                 case 'paper':
-    //                     result = 'draw';
-    //                     break;
-    //                 case 'scissors':
-    //                     result = 'lose';
-    //                     break;
-    //             }
-    //         }
-    //         case 'scissors': {
-    //             switch(playerSelection) {
-    //                 case 'rock':
-    //                     result = 'win';
-    //                     break;
-    //                 case 'paper':
-    //                     result = 'lose';
-    //                     break;
-    //                 case 'scissors':
-    //                     result = 'draw';
-    //                     break;
-    //             }
-    //         }
-    //     }
-    //     return result;
-    // }
-
-} //end game function
+} //end game() function
